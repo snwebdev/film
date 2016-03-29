@@ -37,11 +37,13 @@ $.getJSON("times.php", function (times) {
     $("#myModal li").on("click", function (event) {
 
         switch (event.target.id) {
+          
             case "moreFilms":
-                filmsForCinema(bigListIndex);
+                
+                filmsForCinema(bigListIndex, $(event.target).text());
                 break;
             case "moreCinemas":
-                cinemasForFilm(bigListIndex);
+                cinemasForFilm(bigListIndex, $(event.target).text());
                 break;
             case "close":
 
@@ -57,7 +59,7 @@ $.getJSON("times.php", function (times) {
 
     
 
-    function filmsForCinema(index) {
+    function filmsForCinema(index, heading) {
         var html = "";
         var filmsForCinema = [];
 
@@ -77,6 +79,7 @@ $.getJSON("times.php", function (times) {
         }
         // alert("passed secon loop");
         $("#myModal").modal("hide");
+        $("#heading").html(heading);
         $("#output").html(html);
 
     }
@@ -102,6 +105,7 @@ $.getJSON("times.php", function (times) {
         }
         // alert("passed secon loop");
         $("#myModal").modal("hide");
+        $("#heading").html($(event.target).text());
         $("#output").html(html);
 
     }
