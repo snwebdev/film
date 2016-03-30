@@ -2,9 +2,9 @@
 
 $.getJSON("times.php", function (times) {
 //alert(times);
-    var html = "";
+    var wholeListHTML = "";
     for (var i = 0; i < times.length; i++) {
-        html += "<li  class='timeFilmCinema list-group-item'  data-id='" + i + "'>" +
+        wholeListHTML += "<li  class='timeFilmCinema list-group-item'  data-id='" + i + "'>" +
                 "<span class='time'>" +
                 times[i][0] +
                 "</span>" +
@@ -16,21 +16,17 @@ $.getJSON("times.php", function (times) {
                 "</li>";
     }
 
-    $("#output").html(html);
+    $("#output").html(wholeListHTML);
 
-    $("#output li").on("click", function(event){
+    $(document).on("click", "li", function(event){
+      
+   var bigListIndex =  $(this).data("id");
     
-   bigListIndex =  $(this).data("id");
-       
-
-        
-       
         var film = times[bigListIndex][1];
- 
         var cinema = times[bigListIndex][2];
        
-       $("#moreCinemas").text("All cinemas showing " + film);
-        $("#moreFilms").text("All films at " + cinema);
+       $("#moreCinemas").text("Cinemas showing " + film);
+        $("#moreFilms").text("Films at " + cinema);
         
     $("#myModal").modal("show");
     
@@ -51,40 +47,17 @@ $.getJSON("times.php", function (times) {
                 break;
         }
     });
+    
+    $("#back").on("click", function(){
+        $("#back").css("visibility", "hidden");
+        $("#heading").html("Films in <span id='city'>Glasgow</span>");
+          $("#output").html(wholeListHTML);
+    });
    
     });
 
-    
-
-
-    
-
-    function filmsForCinema(index, heading) {
-        var html = "";
-        var filmsForCinema = [];
-
-        for (var i = 0; i < times.length; i++) {
-            if (times[i][2] === times[index][2]) {
-                filmsForCinema.push([times[i][0], times[i][1]]);
-            }
-        }
-       
-        for (var i = 0; i < filmsForCinema.length; i++) {
-            html += "<li data-toggle='modal' data-target='#myModal' data-backdrop='static' class='timeFilm list-group-item' data-id='" + i + "'>" +
-                    "<span class='time'>" +
-                    filmsForCinema[i][0] +
-                    "</span>" +
-                    filmsForCinema[i][1] +
-                    "</li>";
-        }
-        // alert("passed secon loop");
-        $("#myModal").modal("hide");
-        $("#heading").html(heading);
-        $("#output").html(html);
-
-    }
-    
-      function cinemasForFilm(index) {
+     function cinemasForFilm(index) {
+         $("#back").css("visibility", "visible");
 
         var html = "";
         var cinemasForFilm = [];
@@ -111,7 +84,40 @@ $.getJSON("times.php", function (times) {
     }
 
 
+    
+
+    function filmsForCinema(index, heading) {
+        $("#back").css("visibility", "visible");
+        var html = "";
+        var filmsForCinema = [];
+
+        for (var i = 0; i < times.length; i++) {
+            if (times[i][2] === times[index][2]) {
+                filmsForCinema.push([times[i][0], times[i][1]]);
+            }
+        }
+       
+        for (var i = 0; i < filmsForCinema.length; i++) {
+            html += "<li data-toggle='modal' data-target='#myModal' data-backdrop='static' class='timeFilm list-group-item' data-id='" + i + "'>" +
+                    "<span class='time'>" +
+                    filmsForCinema[i][0] +
+                    "</span>" +
+                    filmsForCinema[i][1] +
+                    "</li>";
+        }
+        // alert("passed secon loop");
+        $("#myModal").modal("hide");
+        $("#heading").html(heading);
+        $("#output").html(html);
+
+    }
+    
+    
+
+
 });
+
+ 
 
 
 
