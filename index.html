@@ -1,118 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Film Times</title>
-  
- 
-  
-  <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+        <title>Film Times</title>
 
 
-<style>
-    #output{
-        padding-top: 50px;
-    }
-    li:hover{
-        background-color: #c0d3ed;
-        cursor:pointer;
-    }
-    .filmName {
-        font-weight: bold;
-    }
-    .time {
-        padding-right: 5%;
-    }
-    
-    
-    #back{
-        position:absolute;
-        right: 0;
-        padding-top: 10px;
-        padding-right: 30px;
-        padding-left: 20px;
-        font-size: 28px;
-        visibility: hidden;
-    }
-    
-    #back:hover {
-        cursor: pointer;
-    }
-    
-    #heading {
-        width: 80%;
-        font-size: 20px;
-        padding-top: 10px;
-        padding-left: 10px;
-    }
-  
-</style>
 
-</head>
-<body>
-     <script   src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
-     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-     
-<div class="container">
-<div id="navbar" class="navbar navbar-default navbar-fixed-top">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
 
-        
-        <span id="back" class="glyphicon glyphicon-menu-left"></span>
-   
-        <p id="heading" class="heading">Films in <span id="city">Glasgow</span></p>
-   
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-    
-    
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</div>
-</div>      
-    <ul class="list-group" id="output" >
-            
-    
-    </ul>
+        <style>
+            #output{
+                padding-top: 50px;
+            }
 
-    
-    <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-       
-        <div class="modal-body">
-            <ul class="list-group">
-                <li class="list-group-item" id="moreFilms"></li>
-                <li class="list-group-item" id="moreCinemas"></li>
-                <li class="list-group-item" id="close">Close</li>
-            </ul>
+
+            li:hover{
+                background-color: #c0d3ed;
+                cursor:pointer;
+
+            }
+
+            .bothItems {
+                float: left;
+                width: 100%;
+            }
+
+            .filmName {
+                font-weight: bold;
+            }
+
+            .time {
+                float: left;
+                width: 70px;
+                padding-right: 5%;
+            }
+
+            .secondItem{
+                width: calc(100% - 70px);
+                float: left;    
+            }
+
+            #back{
+                position:absolute;
+                right: 0;
+                padding-top: 10px;
+                padding-right: 15px;
+                padding-left: 20px;
+                font-size: 28px;
+                visibility: hidden;
+            }
+
+            #back:hover {
+                cursor: pointer;
+                color: #46f711;
+            }
+
+            #heading {
+                width: 80%;
+                font-size: 20px;
+                padding-top: 10px;
+                padding-left: 0px;
+            }
+
+        </style>
+
+
+
+    </head>
+    <body>
+        <script   src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+        <div class="container">
+            <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+                <div class="container-fluid">
+
+                    <span id="back" class="glyphicon glyphicon-menu-left"></span>
+
+                    <p id="heading" class="heading">Films around <span id="city">Glasgow</span></p>
+
+                </div>
+            </div>
+        </div>  
+
+
+        <ul class="list-group" id="output" > </ul>
+
+
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <ul class="list-group">
+                            <li class="list-group-item" id="moreFilms"></li>
+                            <li class="list-group-item" id="moreCinemas"></li>
+                            <li class="list-group-item" id="close">Close</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-      </div>
-    </div>
-  </div>
+
+
+
+        <script src="loop.js"></script>
+
+        <script>
+
+            $(window).resize(function () {
+                resizeOutput();
+            });
+
+            function resizeOutput() {
+                $("#output").css("padding-top", $("#navbar").height() + "px");
+            }
+            ;
+
+        </script>
 
 
 
 
-<script src="loop.js"></script>
-
-
-<script>
-    $("#output").css("padding-top", $("#navbar").height() +"px");
-</script>
-
-
-
-
-</body>
+    </body>
 </html> 
