@@ -6,28 +6,35 @@ $scraped = file_get_contents('http://www.findanyfilm.com/find-cinema-tickets?tow
 $cinemaStartString = '<span class="cinemaName">';
 $cinemaEndString = '</span>';
 $filmStartString = '<li class="filmTitle">';
+//$filmStartString = 'mince';
 $filmTitleEndString = '</h1>';
 $filmsEndString = '<!-- End Films -->';
-$timeStartString = 'class="cssTouchButton">';
+//$timeStartString = 'class="cssTouchButton">';
+$timeStartString = 'target="_blank" class="cssTouchButton">';
 $timeEndString = '</a>';
-$timesEndString = '<!-- End Screenings for film -->';
+//$timeEndString = '</ul>';
+//$timesEndString = '<!-- End Screenings for film -->';
+//$timesEndString = '<ul class="filmTimes clearfix">';
+$timesEndString = '<span class="cinemaName">';
 $cinemaCount = 0;
 $filmCount = 0;
 $timeCount = 0;
 $timeArray = array();
+
 
 $listingEndString = 'id="jsrender_screenings"';
 $endString = "</span>";
 
 
 while (isMoreCinemas($scraped, $cinemaStartString)) {
-
+    
     $cinemaCount++;
     $cinemaName = getPartBetween($scraped, $cinemaStartString, $cinemaEndString);
     $cinemaName = getPartBeforeSubstring($cinemaName, ',');
     $scraped = getPartAfterSubstring($scraped, $cinemaStartString);
     $scraped = getPartAfterSubstring($scraped, $cinemaEndString);
 
+    
     while (isMoreFilms($scraped, $filmStartString, $cinemaStartString, $listingEndString)) {
 
         $filmCount++;
@@ -35,17 +42,21 @@ while (isMoreCinemas($scraped, $cinemaStartString)) {
         $scraped = getPartAfterSubstring($scraped, '<h1>');
         $filmName = getPartBeforeSubstring("$scraped", '</h1>');
         $filmName = removeYear($filmName);
-
+ 
         while (isMoreTimes($scraped, $timeStartString, $timeEndString, $timesEndString, $filmStartString, $listingEndString)) {
-            $timeCount++;
+    
             $scraped = getPartAfterSubstring($scraped, $timeStartString);
             $time = getPartBeforeSubstring($scraped, $timeEndString);
-            $lineArray = array($time, $filmName, $cinemaName);
-            array_push($timeArray, $lineArray);
-            $scraped = getPartAfterSubstring($scraped, $timeEndString);
+            if($time == "Visit website"){
+                 $scraped = getPartAfterSubstring($scraped, $timeStartString);
+            } else{
+               array_push($timeArray, [$time, $filmName, $cinemaName]);
+            $scraped = getPartAfterSubstring($scraped, $timeEndString); 
+            }
         }
-    }
+   }
 }
+
 sort($timeArray);
 echo json_encode($timeArray);
 
