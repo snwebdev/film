@@ -6,16 +6,13 @@ $scraped = file_get_contents('http://www.findanyfilm.com/find-cinema-tickets?tow
 $cinemaStartString = '<span class="cinemaName">';
 $cinemaEndString = '</span>';
 $filmStartString = '<li class="filmTitle">';
-//$filmStartString = 'mince';
+
 $filmTitleEndString = '</h1>';
 $filmsEndString = '<!-- End Films -->';
-//$timeStartString = 'class="cssTouchButton">';
+
 $timeStartString = 'target="_blank" class="cssTouchButton">';
 $timeEndString = '</a>';
-//$timeEndString = '</ul>';
-//$timesEndString = '<!-- End Screenings for film -->';
-//$timesEndString = '<ul class="filmTimes clearfix">';
-$timesEndString = '<span class="cinemaName">';
+$timesEndString = '</ul>';
 $cinemaCount = 0;
 $filmCount = 0;
 $timeCount = 0;
@@ -42,6 +39,7 @@ while (isMoreCinemas($scraped, $cinemaStartString)) {
         $scraped = getPartAfterSubstring($scraped, '<h1>');
         $filmName = getPartBeforeSubstring("$scraped", '</h1>');
         $filmName = removeYear($filmName);
+        $scraped = getPartAfterSubstring($scraped, '</h1>');
  
         while (isMoreTimes($scraped, $timeStartString, $timeEndString, $timesEndString, $filmStartString, $listingEndString)) {
     
