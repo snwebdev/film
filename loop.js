@@ -1,7 +1,8 @@
 
 $.getJSON("times.php", function (times) {
 
-  //console.log(times);
+  console.log(times);
+  times = removeStarted(times);
 
     var wholeListHTML = "";
 
@@ -102,9 +103,6 @@ $.getJSON("times.php", function (times) {
 
     }
 
-
-
-
     function filmsForCinema(index, heading) {
         $("#back").css("visibility", "visible");
         var html = "";
@@ -130,6 +128,24 @@ $.getJSON("times.php", function (times) {
         resizeOutput();
         $("#output").html(html);
 
+    }
+
+    function removeStarted(times){
+      var currentDate = new Date();
+      var currentHour = currentDate.getHours();
+      var $currentMinute = currentDate.getMinutes();
+      var newTimes = [];
+      var filmHour, filmMinutes;
+      
+      for (var i = 0; i < times.length; i++){
+        filmHour = times[i][0].substring(0,2);
+        filmMinutes = times[i][0].substring(3,4);
+
+      if(filmHour > currentHour || (filmHour === currentHour && $filmMinutes >= filmMinutes)){
+          newTimes.push(times[i]);
+      }
+    }
+      return(newTimes);
     }
 
 

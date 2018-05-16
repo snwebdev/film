@@ -1,6 +1,7 @@
 
 
 <?php
+putenv("America/Adak");
 $scraped = file_get_contents('http://www.findanyfilm.com/find-cinema-tickets?townpostcode=glasgow');
 $cinemaStartString = '<span class="cinemaName">';
 $cinemaEndString = '</span>';
@@ -55,28 +56,9 @@ while (isMoreCinemas($scraped, $cinemaStartString)) {
 }
 
 sort($timeArray);
-$timeArray = removeStarted($timeArray);
+
 
 echo json_encode($timeArray);
-
-function removeStarted($arrayIn){
-  $arrayOut = array();
-  $currentHour = date('H');
-  $currentMinute = date('i');
-   foreach($arrayIn as $item){
-     $filmHour = substr($item[0],0,2);
-     $filmMinute = substr($item[0],3,4);
-     if ($filmHour > $currentHour){
-       array_push($arrayOut, $item);
-     } elseif ($filmHour == $currentHour && $filmMinute >= $currentMinute) {
-       array_push($arrayOut, $item);
-     }
-   }
-   return($arrayOut);
- }
-
-
-
 
 
 function removeYear($filmName) {
