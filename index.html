@@ -1,131 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Film Times</title>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <title>Film Times</title>
 
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
 
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+  <style>
+    #output {
+      margin-top: 50px;
+    }
 
+    li:hover {
+      background-color: #c0d3ed;
+      cursor: pointer;
+    }
 
-        <style>
-            #output{
-                padding-top: 50px;
-            }
+    .bothItems {
+      float: left;
+      width: 100%;
+    }
 
+    .filmName {
+      font-weight: bold;
+    }
 
-            li:hover{
-                background-color: #c0d3ed;
-                cursor:pointer;
+    .time {
+      float: left;
+      width: 70px;
+    }
 
-            }
+    .secondItem {
+      width: calc(100% - 70px);
+      float: left;
+    }
 
-            .bothItems {
-                float: left;
-                width: 100%;
-            }
+    #back {
+      position: absolute;
+      right: 0;
+      padding-top: 10px;
+      padding-right: 50px;
+      padding-left: 20px;
+      font-size: 28px;
+      visibility: hidden;
+    }
 
-            .filmName {
-                font-weight: bold;
-            }
+    #back:hover {
+      cursor: pointer;
+      color: #46f711;
+    }
+  </style>
+</head>
 
-            .time {
-                float: left;
-                width: 70px;
-            }
+<body>
+  <script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
-            .secondItem{
-                width: calc(100% - 70px);
-                float: left;    
-            }
+   <div class="container">
 
-            #back{
-                position:absolute;
-                right: 0;
-                padding-top: 10px;
-                padding-right: 15px;
-                padding-left: 20px;
-                font-size: 28px;
-                visibility: hidden;
-            }
-
-            #back:hover {
-                cursor: pointer;
-                color: #46f711;
-            }
-
-            #heading {
-                width: 80%;
-                font-size: 20px;
-                padding-top: 10px;
-                padding-left: 0px;
-            }
-
-        </style>
-
-
-
-    </head>
-    <body>
-        <script   src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-        <div class="container">
-            <div id="navbar" class="navbar navbar-default navbar-fixed-top">
-                <div class="container-fluid">
-
-                    <span id="back" class="glyphicon glyphicon-menu-left"></span>
-
-                    <p id="heading" class="heading">Films around <span id="city">Glasgow</span></p>
-
-                </div>
+    <div class="row col-xs-12 col-sm-10 col-md-8 col-lg-6 col-lg-offset-3">
+        <div class="navbar-default navbar-fixed-top">
+          <div container-fluid>
+            <div class="navbar-brand">
+              Films around Glasgow
             </div>
-        </div>  
-
-
-        <ul class="list-group" id="output" > </ul>
-
-
-        <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <ul class="list-group">
-                            <li class="list-group-item" id="moreFilms"></li>
-                            <li class="list-group-item" id="moreCinemas"></li>
-                            <li class="list-group-item" id="close">Close</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <span id="back" class="glyphicon glyphicon-menu-left">back</span>
+          </div>
         </div>
 
+    <ul class="list-group" id="output"></ul>
+
+  </div>
+
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-body">
+            <ul class="list-group">
+              <li class="list-group-item" id="moreFilms"></li>
+              <li class="list-group-item" id="moreCinemas"></li>
+              <li class="list-group-item" id="close">Close</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+ <script src="loop.js"></script>
 
 
-        <script src="loop.js"></script>
 
-        <script>
+  <script>
+    $(window).resize(function() {
+      resizeOutput();
+    });
 
-            $(window).resize(function () {
-                resizeOutput();
-            });
-
-            function resizeOutput() {
-                $("#output").css("padding-top", $("#navbar").height() + "px");
-            }
-            ;
-
-        </script>
+    function resizeOutput() {
+      $("#output").css("padding-top", $("#navbar").height() + "px");
+    };
+  </script>
 
 
 
 
-    </body>
-</html> 
+</body>
+
+</html>

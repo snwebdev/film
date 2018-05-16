@@ -1,6 +1,8 @@
 
 $.getJSON("times.php", function (times) {
 
+  //console.log(times);
+
     var wholeListHTML = "";
 
     for (var i = 0; i < times.length; i++) {
@@ -18,7 +20,7 @@ $.getJSON("times.php", function (times) {
                 "</li>";
     }
 
-    resizeOutput();
+    //resizeOutput();
     $("#output").html(wholeListHTML);
 
     $(document).on("click", ".selectable", function () {
@@ -72,7 +74,7 @@ $.getJSON("times.php", function (times) {
     function cinemasForFilm(index, heading) {
         $("#back").css("visibility", "visible");
 
-     
+
         var cinemasForFilm = [];
 
         for (var i = 0; i < times.length; i++) {
@@ -82,7 +84,7 @@ $.getJSON("times.php", function (times) {
         }
 
 
-        var html = "";  
+        var html = "";
         for (var i = 0; i < cinemasForFilm.length; i++) {
             html += "<li class='bothItems list-group-item' data-id='" + i + "'>" +
                     "<div class='time'>" +
@@ -91,7 +93,7 @@ $.getJSON("times.php", function (times) {
                     cinemasForFilm[i][1] +
                     "</div></li>";
         }
-     
+
 
         $("#myModal").modal("hide");
         $("#heading").html(heading);
@@ -132,14 +134,3 @@ $.getJSON("times.php", function (times) {
 
 
 });
-
-
-
-
-
-
-
-
-
-
-   

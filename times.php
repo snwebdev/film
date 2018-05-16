@@ -1,7 +1,6 @@
 
 
 <?php
-
 $scraped = file_get_contents('http://www.findanyfilm.com/find-cinema-tickets?townpostcode=glasgow');
 $cinemaStartString = '<span class="cinemaName">';
 $cinemaEndString = '</span>';
@@ -24,14 +23,14 @@ $endString = "</span>";
 
 
 while (isMoreCinemas($scraped, $cinemaStartString)) {
-    
+
     $cinemaCount++;
     $cinemaName = getPartBetween($scraped, $cinemaStartString, $cinemaEndString);
     $cinemaName = getPartBeforeSubstring($cinemaName, ',');
     $scraped = getPartAfterSubstring($scraped, $cinemaStartString);
     $scraped = getPartAfterSubstring($scraped, $cinemaEndString);
 
-    
+
     while (isMoreFilms($scraped, $filmStartString, $cinemaStartString, $listingEndString)) {
 
         $filmCount++;
@@ -40,23 +39,44 @@ while (isMoreCinemas($scraped, $cinemaStartString)) {
         $filmName = getPartBeforeSubstring("$scraped", '</h1>');
         $filmName = removeYear($filmName);
         $scraped = getPartAfterSubstring($scraped, '</h1>');
- 
+
         while (isMoreTimes($scraped, $timeStartString, $timeEndString, $timesEndString, $filmStartString, $listingEndString)) {
-    
+
             $scraped = getPartAfterSubstring($scraped, $timeStartString);
             $time = getPartBeforeSubstring($scraped, $timeEndString);
             if($time == "Visit website"){
                  $scraped = getPartAfterSubstring($scraped, $timeStartString);
             } else{
                array_push($timeArray, [$time, $filmName, $cinemaName]);
-            $scraped = getPartAfterSubstring($scraped, $timeEndString); 
+            $scraped = getPartAfterSubstring($scraped, $timeEndString);
             }
         }
    }
 }
 
 sort($timeArray);
+$timeArray = removeStarted($timeArray);
+
 echo json_encode($timeArray);
+
+function removeStarted($arrayIn){
+  $arrayOut = array();
+  $currentHour = date('H');
+  $currentMinute = date('i');
+   foreach($arrayIn as $item){
+     $filmHour = substr($item[0],0,2);
+     $filmMinute = substr($item[0],3,4);
+     if ($filmHour > $currentHour){
+       array_push($arrayOut, $item);
+     } elseif ($filmHour == $currentHour && $filmMinute >= $currentMinute) {
+       array_push($arrayOut, $item);
+     }
+   }
+   return($arrayOut);
+ }
+
+
+
 
 
 function removeYear($filmName) {
@@ -162,4 +182,3 @@ function getPartAfterSubstring($string, $substring) {
     return($part);
 }
 ?>
-  
