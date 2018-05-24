@@ -1,7 +1,7 @@
 
 
 <?php
-putenv("America/Adak");
+
 $scraped = file_get_contents('http://www.findanyfilm.com/find-cinema-tickets?townpostcode=glasgow');
 $cinemaStartString = '<span class="cinemaName">';
 $cinemaEndString = '</span>';
