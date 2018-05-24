@@ -1,3 +1,5 @@
+//last modified 24/05/18 11.18
+
 $.getJSON("times.php", function (times) {
     times = removeStarted(times);
 
